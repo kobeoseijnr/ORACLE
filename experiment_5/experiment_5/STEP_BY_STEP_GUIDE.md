@@ -100,7 +100,7 @@ python evaluate_with_saved_model.py
 **What happens:**
 1. Loads trained model from `results/models/trained_morl_model_final.pth`
 2. Evaluates on all 1000 target specifications
-3. Generates 11 solutions per specification (using 12 preference vectors)
+3. Generates 10 solutions per specification (using 10 preference vectors)
 4. Saves evaluation results
 
 **Expected time:** 20-30 minutes
@@ -182,7 +182,7 @@ python target_count.py
 
 **Expected output displayed:**
 ```
-Solutions reached: 10,802/11,000 (98.2%)
+Solutions reached: 9,919/10,000 (99.2%)
 Specifications reached: 982/1000 (98.2%)
 ```
 
@@ -214,7 +214,7 @@ Open: `results/TECHNICAL_REPORT_UPDATED.md`
 - All statistics and findings
 
 ### Results Data
-- `results/evaluation_on_1000.csv` - Complete results table (11,000 rows)
+- `results/evaluation_on_1000.csv` - Complete results table (10,000 rows)
 - `results/evaluation_on_1000.json` - Detailed JSON results
 - `data/all_1000_input_values.json` - All input target values
 
@@ -265,8 +265,8 @@ python verify_reproducibility.py
 
 - **Generalization**: 982/1000 specifications (98.2%)
 - **Sample Efficiency**: 12 steps/solution (55.6% improvement)
-- **Total Solutions**: 11,000 solutions across 1,000 specifications
-- **Solutions per Spec**: 11 solutions per specification
+- **Total Solutions**: 10,000 solutions across 1,000 specifications
+- **Solutions per Spec**: 10 solutions per specification
 - **Selected targets for plots**: [655, 115, 26, 760, 282, 251, 229, 143, 755, 105]
 
 ---

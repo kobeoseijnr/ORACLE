@@ -66,7 +66,7 @@ def _load_morl_specs_reached():
 
 
 def row_from_morl(sol, specs_reached=None):
-    """Build a CSV row from a MORL+AutoCkt solution (15 columns). MORL: 982 specs have Yes (all 11 solutions per spec)."""
+    """Build a CSV row from a MORL+AutoCkt solution (15 columns). MORL: 982 specs have Yes (all 10 solutions per spec)."""
     spec = sol.get("spec")
     if specs_reached is not None and spec is not None:
         try:

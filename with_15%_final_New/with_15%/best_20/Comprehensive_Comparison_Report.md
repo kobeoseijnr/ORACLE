@@ -22,7 +22,7 @@ This study compares single-objective reinforcement learning (Original AutoCkt) a
 | **Reward structure** | Scalar (1D) | Pareto vector (4D) | Multi-objective |
 | **Design flexibility** | Single solution | 10 trade-off options | 10× more choices |
 
-**Key Finding:** MORL+AutoCkt demonstrates superior performance compared to Original AutoCkt. MORL achieves higher pass rate (99.2% vs 93.8%), provides 10× solution diversity (10 solutions per specification vs 1), and achieves higher FoM than Original for **100% of specifications** (1000/1000). MORL consistently overshoots Gain, UGBW, and PM while meeting or undershooting I-Bias, providing design margin. The evaluation scope includes 11,000 total solutions (1,000 Original + 10,000 MORL) across 1000 specifications, with comprehensive visualization of design space coverage.
+**Key Finding:** MORL+AutoCkt demonstrates superior performance compared to Original AutoCkt. MORL achieves higher pass rate (99.2% vs 93.8%), provides 10× solution diversity (10 solutions per specification vs 1), and achieves higher FoM than Original for **100% of specifications** (1000/1000). MORL consistently overshoots Gain, UGBW, and PM while meeting or undershooting I-Bias, providing design margin. The evaluation scope includes 10,000 MORL solutions (10 per spec × 1,000 specs); when including the Original AutoCkt baseline (1,000 solutions), the combined analysis covers 11,000 solutions across 1,000 specifications.
 
 ---
 
@@ -143,7 +143,7 @@ Target ranges from AutoCkt paper configuration (used to generate 1000 random spe
 - **Testing:** Both methods tested on all 1000 specifications (same dataset).
 - **Original AutoCkt:** Produces 1 solution per specification, total 1000 solutions across 1000 test specifications.
 - **MORL+AutoCkt:** Produces 10 solutions per specification, total 10,000 solutions across 1000 test specifications.
-- **Total solutions analyzed:** 11,000 solutions across 1000 test specifications.
+- **Total solutions analyzed (combined):** 11,000 solutions across 1000 test specifications (1,000 AutoCkt + 10,000 MORL).
 
 ---
 

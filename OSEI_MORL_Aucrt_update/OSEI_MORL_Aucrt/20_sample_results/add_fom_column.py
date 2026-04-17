@@ -105,7 +105,7 @@ def main():
     else:
         print(f"[SKIP] {autockt_csv} not found")
 
-    # MORL+AutoCkt: 11000 rows
+    # MORL+AutoCkt: 10000 rows
     morl_csv = base / "original_morl_autockt_results.csv"
     if morl_csv.exists():
         n, valid = process_csv(morl_csv, morl_csv)

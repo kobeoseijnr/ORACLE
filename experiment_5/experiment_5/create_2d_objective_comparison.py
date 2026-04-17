@@ -600,9 +600,9 @@ This document explains why MORL+AutoCkt achieves better time efficiency compared
 - **Original AutoCkt Estimated Runtime**: 225.00 minutes (13,500 seconds) for 1,000 solutions
   - Based on Sample Efficiency = 27 steps/solution
   - Estimated at 0.5 seconds per step
-- **MORL+AutoCkt Actual Runtime**: 91.67 minutes (5,500 seconds) for 11,000 solutions
+- **MORL+AutoCkt Actual Runtime**: 91.67 minutes (5,500 seconds) for 10,000 solutions
   - Average time per solution: 0.50 seconds
-- **Speedup**: MORL+AutoCkt is **2.45× faster overall** despite generating 11× more solutions
+- **Speedup**: MORL+AutoCkt is **2.45× faster overall** despite generating 10× more solutions
 
 ## Why MORL+AutoCkt is Faster Per Solution
 
@@ -625,16 +625,16 @@ Better exploration/exploitation balance from multi-objective learning. The multi
 - Original AutoCkt: 27 steps per solution
 
 ### Per-Target Total Time
-- MORL+AutoCkt: ~132 steps per target (12 × 11 solutions)
+- MORL+AutoCkt: ~120 steps per target (12 × 10 solutions)
 - Original AutoCkt: 27 steps per target (1 solution)
 
-**Key Insight**: While MORL+AutoCkt uses more total steps per target (132 vs 27), it provides 11× solution diversity. The "faster" claim refers to **per-solution efficiency**, not total time per target.
+**Key Insight**: While MORL+AutoCkt uses more total steps per target (120 vs 27), it provides 10× solution diversity. The "faster" claim refers to **per-solution efficiency**, not total time per target.
 
 ## Overall Efficiency
 
-Despite generating 11× more solutions (11,000 vs 1,000), MORL+AutoCkt completes in **2.45× less time** overall:
+Despite generating 10× more solutions (10,000 vs 1,000), MORL+AutoCkt completes in **2.45× less time** overall:
 - Original AutoCkt: 225.00 minutes for 1,000 solutions
-- MORL+AutoCkt: 91.67 minutes for 11,000 solutions
+- MORL+AutoCkt: 91.67 minutes for 10,000 solutions
 
 This demonstrates that the per-solution efficiency gain (55.6%) more than compensates for generating more solutions, resulting in superior overall performance.
 
@@ -646,7 +646,7 @@ MORL+AutoCkt achieves better time efficiency through:
 3. Preference-driven focused search
 4. Better training from multi-objective learning
 
-The method trades higher total simulation steps per target for 11× solution diversity, providing designers with multiple Pareto-optimal options while maintaining superior computational efficiency.
+The method trades higher total simulation steps per target for 10× solution diversity, providing designers with multiple Pareto-optimal options while maintaining superior computational efficiency.
 
 ---
 Generated: {Path(__file__).stat().st_mtime}

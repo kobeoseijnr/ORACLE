@@ -52,11 +52,11 @@ python create_2d_objective_comparison.py
 ## Data Sources
 
 The script reads from:
-- `../results/all_input_output_values_complete.json` - Contains all 11,000 solutions (11 per spec × 1000 specs)
+- `../results/all_input_output_values_complete.json` - Contains all 10,000 solutions (10 per spec × 1000 specs)
 
 ## Best MORL Solution Selection
 
-For each target, the best MORL solution is selected from 11 candidates using:
+For each target, the best MORL solution is selected from 10 candidates using:
 - Normalized scores for each objective (gain, ugbw, phm, ibias)
 - Overall score = average of all four normalized scores
 - Solution with highest overall score is selected as the "best" solution
