@@ -31,8 +31,7 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 
 ## Published Table Provenance (CSV sources)
 
-This codebase contains multiple experiment runs stored under different folders. The following CSVs were identified as the closest reproducible sources for the paper tables in this workspace:
-
+This codebase contains multiple experiment runs stored under different folders. 
 - **Hypervolume / Sparsity / PF Size table**
   - `with_15%_final_New/with_15%/morl_autockt/results/hypervolume_sparsity_comparison.csv` (use the `MEAN` row)
 
