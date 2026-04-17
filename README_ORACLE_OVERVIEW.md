@@ -1,5 +1,9 @@
 ﻿# ORACLE: A Multi-Objective Reinforcement Learning-Based Analog Circuit Design Optimizer with LLM-Guided Exploration
 
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-Framework-red.svg)](https://pytorch.org/)
+[![NGSpice](https://img.shields.io/badge/Simulator-NGSpice-green.svg)](http://ngspice.sourceforge.net/)
+
 ORACLE is an open-source framework for **multi-objective analog circuit design optimization** using **preference-conditioned reinforcement learning** and **LLM-guided exploration**.
 
 Unlike conventional RL-based analog sizing methods that optimize a single scalar reward, ORACLE keeps objectives separate during learning through **vector-valued rewards**. This allows a single trained model to generate multiple trade-off solutions for the same target specification without retraining.
@@ -144,16 +148,16 @@ A typical project structure may look like this:
 
 ```text
 ORACLE/
-Γö£ΓöÇΓöÇ env/                # multi-objective circuit environment
-Γö£ΓöÇΓöÇ agents/             # preference-conditioned MO-DDQN agents
-Γö£ΓöÇΓöÇ models/             # neural network definitions
-Γö£ΓöÇΓöÇ llm/                # LLM-guided action masking utilities
-Γö£ΓöÇΓöÇ configs/            # experiment and benchmark configs
-Γö£ΓöÇΓöÇ scripts/            # training and evaluation scripts
-Γö£ΓöÇΓöÇ results/            # logs, checkpoints, plots, tables
-Γö£ΓöÇΓöÇ notebooks/          # analysis notebooks
-Γö£ΓöÇΓöÇ requirements.txt
-ΓööΓöÇΓöÇ README.md
+|-- env/                # multi-objective circuit environment
+|-- agents/             # preference-conditioned MO-DDQN agents
+|-- models/             # neural network definitions
+|-- llm/                # LLM-guided action masking utilities
+|-- configs/            # experiment and benchmark configs
+|-- scripts/            # training and evaluation scripts
+|-- results/            # logs, checkpoints, plots, tables
+|-- notebooks/          # analysis notebooks
+|-- requirements.txt
+`-- README.md
 ```
 
 ## Installation
@@ -190,39 +194,39 @@ python generate_all_report_graphs.py
 
 ```text
 ORACLE_with_15_with_20/
-ΓööΓöÇΓöÇ morl_experiments/
-    Γö£ΓöÇΓöÇ morl_autockt/                          # MORL code and results
-    Γöé   Γö£ΓöÇΓöÇ autockt/                           # OpenAI Gym environment for the op-amp
-    Γöé   Γöé   Γö£ΓöÇΓöÇ envs/                          # Environment definitions
-    Γöé   Γöé   ΓööΓöÇΓöÇ gen_specs/                     # Target spec generator
-    Γöé   Γö£ΓöÇΓöÇ methodology/                       # Agent implementations
-    Γöé   Γöé   Γö£ΓöÇΓöÇ autockt/
-    Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ models/                    # DDQN architectures
-    Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ evaluation/                # Hypervolume, sparsity evaluators
-    Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ utils/                     # Utility functions
-    Γöé   Γöé   ΓööΓöÇΓöÇ eval_engines/                  # NGSpice and surrogate wrapper
-    Γöé   Γöé       ΓööΓöÇΓöÇ ngspice/
-    Γöé   Γöé           Γö£ΓöÇΓöÇ ngspice_inputs/        # Netlists, SPICE models, configs
-    Γöé   Γöé           Γö£ΓöÇΓöÇ ngspice_wrapper.py     # Direct NGSpice interface
-    Γöé   Γöé           ΓööΓöÇΓöÇ surrogate_wrapper.py   # Fast surrogate evaluator
-    Γöé   Γö£ΓöÇΓöÇ data/                              # Target spec files (JSON)
-    Γöé   Γö£ΓöÇΓöÇ results/                           # All outputs (CSV, JSON, models)
-    Γöé   Γö£ΓöÇΓöÇ main.py                            # Training entry point
-    Γöé   Γö£ΓöÇΓöÇ evaluate.py                        # Evaluation script
-    Γöé   Γö£ΓöÇΓöÇ train_nw_vs_cosine.py              # NW vs Cosine agent comparison
-    Γöé   Γö£ΓöÇΓöÇ gen_nw_original.py                 # NW results on original specs
-    Γöé   ΓööΓöÇΓöÇ merge_llm_to_cosine.py             # Merge LLM results into cosine CSV
-    Γö£ΓöÇΓöÇ original_autockt/                      # AutoCkt baseline
-    Γöé   Γö£ΓöÇΓöÇ autockt/                           # Original environment
-    Γöé   Γö£ΓöÇΓöÇ eval_engines/                      # Original NGSpice engine
-    Γöé   Γö£ΓöÇΓöÇ results/                           # Baseline results
-    Γöé   Γö£ΓöÇΓöÇ graphs/                            # Baseline plots
-    Γöé   Γö£ΓöÇΓöÇ main.py                            # Training script
-    Γöé   ΓööΓöÇΓöÇ evaluate.py                        # Evaluation script
-    Γö£ΓöÇΓöÇ best_20/                               # Analysis and visualization
-    Γöé   Γö£ΓöÇΓöÇ generate_std_vs_llm_graphs.py      # 4-group comparison graphs
-    Γöé   Γö£ΓöÇΓöÇ generate_all_report_graphs.py      # Full report figures
-    Γöé   Γö£ΓöÇΓöÇ Comprehensive_Comparison_Report.md # Written comparison
-    Γöé   ΓööΓöÇΓöÇ std_vs_llm_figures/                # Output figures
-    ΓööΓöÇΓöÇ create_best_comparison.py              # Best-of-1000 comparison
+`-- morl_experiments/
+    |-- morl_autockt/                          # MORL code and results
+    |   |-- autockt/                           # OpenAI Gym environment for the op-amp
+    |   |   |-- envs/                          # Environment definitions
+    |   |   `-- gen_specs/                     # Target spec generator
+    |   |-- methodology/                       # Agent implementations
+    |   |   |-- autockt/
+    |   |   |   |-- models/                    # DDQN architectures
+    |   |   |   |-- evaluation/                # Hypervolume, sparsity evaluators
+    |   |   |   `-- utils/                     # Utility functions
+    |   |   `-- eval_engines/                  # NGSpice and surrogate wrapper
+    |   |       `-- ngspice/
+    |   |           |-- ngspice_inputs/        # Netlists, SPICE models, configs
+    |   |           |-- ngspice_wrapper.py     # Direct NGSpice interface
+    |   |           `-- surrogate_wrapper.py   # Fast surrogate evaluator
+    |   |-- data/                              # Target spec files (JSON)
+    |   |-- results/                           # All outputs (CSV, JSON, models)
+    |   |-- main.py                            # Training entry point
+    |   |-- evaluate.py                        # Evaluation script
+    |   |-- train_nw_vs_cosine.py              # NW vs Cosine agent comparison
+    |   |-- gen_nw_original.py                 # NW results on original specs
+    |   `-- merge_llm_to_cosine.py             # Merge LLM results into cosine CSV
+    |-- original_autockt/                      # AutoCkt baseline
+    |   |-- autockt/                           # Original environment
+    |   |-- eval_engines/                      # Original NGSpice engine
+    |   |-- results/                           # Baseline results
+    |   |-- graphs/                            # Baseline plots
+    |   |-- main.py                            # Training script
+    |   `-- evaluate.py                        # Evaluation script
+    |-- best_20/                               # Analysis and visualization
+    |   |-- generate_std_vs_llm_graphs.py      # 4-group comparison graphs
+    |   |-- generate_all_report_graphs.py      # Full report figures
+    |   |-- Comprehensive_Comparison_Report.md # Written comparison
+    |   `-- std_vs_llm_figures/                # Output figures
+    `-- create_best_comparison.py              # Best-of-1000 comparison
 ```
