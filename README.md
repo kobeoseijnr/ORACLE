@@ -10,8 +10,6 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 ## Repository Structure (high-level)
 
 - `with_15%_with_20/`, `with_15%_final_New/`: experiment folders (training/evaluation scripts, configs, and analysis utilities)
-- `AutoCkt/`: baseline/original AutoCkt components and scripts
-- `OSEI_MORL_Aucrt (1)/`, `OSEI_MORL_Aucrt_update/`: MORL + LLM masking training/evaluation code
 - `compute_hv_sparsity_comparison.py`, `plot_hv_sparsity_figures.py`: Pareto metric computation and plotting 
 
 ## Project Structure (detailed)
@@ -29,7 +27,7 @@ The repository contains multiple experiment snapshots. The most important entry 
   - `train_llm_ddqn.py`: train/evaluate LLM-guided DDQN variants (cosine + NW) and generate comparisons.
   - `evaluate.py`: evaluation utility used by the above scripts.
   - `results/`: output folder used by scripts in this directory.
-  - `methodology/`: MORL/AutoCkt environment + agent implementation used by the scripts above.
+  - `methodology/`: environment + agent implementation used by the scripts above.
 
 In general, training scripts write:
 
@@ -47,9 +45,6 @@ In general, training scripts write:
 
 - Train/evaluate MORL scalarizations:
   - See `with_15%_with_20/morl_experiments/morl_autockt/train_nw_vs_cosine.py`
-
-- Train/evaluate MORL with LLM-guided action masking:
-  - See `OSEI_MORL_Aucrt (1)/OSEI_MORL_Aucrt/train_llm_masked.py`
 
 ## How to Run Experiments
 
