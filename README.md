@@ -14,6 +14,29 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 - `OSEI_MORL_Aucrt (1)/`, `OSEI_MORL_Aucrt_update/`: MORL + LLM masking training/evaluation code
 - `compute_hv_sparsity_comparison.py`, `plot_hv_sparsity_figures.py`: Pareto metric computation and plotting 
 
+## Project Structure (detailed)
+
+The repository contains multiple experiment snapshots. The most important entry points for reproducing MORL runs and generating result artifacts are:
+
+- `with_15%_with_20/morl_experiments/morl_autockt/`
+  - `train_nw_vs_cosine.py`: train + evaluate MORL agents with NW vs cosine scalarization.
+  - `evaluate.py`: evaluation pipeline (generates per-solution rollouts / raw results).
+  - `results/`: output folder used by scripts in this directory.
+
+- `with_15%_final_New/with_15%/morl_autockt/`
+  - `train_nw_vs_cosine.py`: train + evaluate MORL NW vs cosine (writes models + raw results + comparison CSV).
+  - `train_llm_cosine_original.py`: evaluate baseline cosine vs LLM-guided cosine and generate CSVs.
+  - `train_llm_ddqn.py`: train/evaluate LLM-guided DDQN variants (cosine + NW) and generate comparisons.
+  - `evaluate.py`: evaluation utility used by the above scripts.
+  - `results/`: output folder used by scripts in this directory.
+  - `methodology/`: MORL/AutoCkt environment + agent implementation used by the scripts above.
+
+In general, training scripts write:
+
+- Model checkpoints (`.pth`) under a `results/models_*` directory.
+- Raw rollouts (`morl_raw_*.json`) under the corresponding `results/` folder.
+- Aggregated results CSVs under the corresponding `results/` folder.
+
 ## Setup
 
 1. Create and activate a Python environment.
@@ -27,6 +50,46 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 
 - Train/evaluate MORL with LLM-guided action masking:
   - See `OSEI_MORL_Aucrt (1)/OSEI_MORL_Aucrt/train_llm_masked.py`
+
+## How to Run Experiments
+
+The codebase contains multiple experiment folders; the commands below reference the most commonly used entrypoints.
+
+MORL NW vs cosine (train + evaluate):
+
+- `with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py`
+  - Train + evaluate:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py`
+  - Evaluate only (use existing trained models):
+    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py --evaluate-only`
+  - Train only:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py --train-only`
+  - Outputs:
+    - Models: `with_15%_final_New/with_15%/morl_autockt/results/models_nw_vs_cosine/`
+    - Raw JSON: `with_15%_final_New/with_15%/morl_autockt/results/morl_raw_{nw|cosine}_agent.json`
+    - Comparison CSV: `with_15%_final_New/with_15%/morl_autockt/results/morl_compare_nw_agent_vs_cosine_agent.csv`
+
+Baseline cosine vs LLM-guided cosine (evaluate + export CSV):
+
+- `with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py`
+  - Train + evaluate:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py`
+  - Evaluate only:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py --evaluate-only`
+  - Outputs:
+    - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_standard_cosine.csv`
+    - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_llm_cosine.csv`
+
+LLM-guided DDQN (cosine + NW):
+
+- `with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py`
+  - Train + evaluate:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py`
+  - Evaluate only:
+    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py --evaluate-only`
+  - Outputs (under the same `results/` directory):
+    - Models: `results/models_llm_ddqn/`
+    - Raw JSON: `results/morl_raw_llm_{cosine|nw}_agent.json`
 
 
 The following small CSV artifacts are tracked specifically to reproduce the paper's **solution-level comparison table** (1,000 target specifications / MO benchmark). These correspond to selecting the **best FoM per spec** (1 row per `spec`) and then reporting:
