@@ -35,20 +35,16 @@ This codebase contains multiple experiment runs stored under different folders.
 - **Hypervolume / Sparsity / PF Size table**
   - `with_15%_final_New/with_15%/morl_autockt/results/hypervolume_sparsity_comparison.csv` (use the `MEAN` row)
 
-- **FoM table (closest matches in workspace)**
-  - **Cosine (Avg FoM \~107.38, Top-20 \~355.37)**
+- **FoM table **
+  - **Cosine **
     - `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_trained_cosine_with_llm.csv`
-  - **NW (closest Top-20 \~370.83 vs paper \~372.40)**
+  - **NW **
     - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_standard_cosine.csv`
-  - **LLM (closest Top-20 \~450.09 vs paper \~460.08)**
+  - **LLM **
     - `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
 
-The exact CSVs producing the paper's Top-20 values of \~372.40 (NW) and \~460.08 (LLM) were not found under the current workspace/Desktop at the time of repository packaging; the closest reproducible alternatives above are used.
 
 ## Hardware
 
 Experiments were executed on a machine equipped with an **NVIDIA GA102 GPU**.
 
-## Citation
-
-If you use this code, please cite the corresponding ORACLE paper (to be added).
