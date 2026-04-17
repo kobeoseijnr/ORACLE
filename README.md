@@ -28,9 +28,6 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 - Train/evaluate MORL with LLM-guided action masking:
   - See `OSEI_MORL_Aucrt (1)/OSEI_MORL_Aucrt/train_llm_masked.py`
 
-## Results Artifacts
-
-This repo is configured to track **code only**. Large artifacts (datasets, results CSVs, model checkpoints, and zipped experiment outputs) are excluded via `.gitignore`.
 
 ## Published Table Provenance (CSV sources)
 
