@@ -122,11 +122,6 @@ Paper-reported Table I values:
 - ORACLE (Cosine + LLM): Pass-rate 100.0%, Avg FoM 132.3, Top-20 FoM 384.3
 - ORACLE (NW): Pass-rate 100.0%, Avg FoM 138.3, Top-20 FoM 450.1
 
-Reproducible CSV artifacts in this repository:
-
-- ORACLE (Cosine): compute best-per-spec from `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_original_cosine_with_llm.csv` using `fom`.
-- ORACLE (Cosine + LLM): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_llm_cosine.csv` (already best-per-spec).
-- ORACLE (NW): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv` (already best-per-spec).
 
 ## Published Table Provenance (CSV sources)
 
