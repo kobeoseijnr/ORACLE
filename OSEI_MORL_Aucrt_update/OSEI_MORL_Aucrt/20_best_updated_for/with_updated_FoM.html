@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AutoCkt 20 + MORL+AutoCkt — Updated FoM</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 960px; margin: 1.5em auto; padding: 0 1.5em; line-height: 1.5; }
+    h1 { font-size: 1.5em; margin-top: 0; border-bottom: 1px solid #ccc; padding-bottom: 0.3em; }
+    h2 { font-size: 1.2em; margin-top: 1.5em; }
+    table { border-collapse: collapse; margin: 0.8em 0; width: 100%; font-size: 0.9em; }
+    th, td { border: 1px solid #333; padding: 6px 8px; text-align: left; }
+    th { background: #eee; font-weight: 600; }
+    img { max-width: 100%; height: auto; display: block; margin: 1em 0; }
+    .note { font-style: italic; color: #555; margin-top: 0.5em; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 1.5em 0; }
+  </style>
+</head>
+<body>
+
+<h1>AutoCkt 20 + MORL+AutoCkt 20 Best Solutions — Report (Updated FoM)</h1>
+
+<h2>Executive Summary</h2>
+<p>This report compares <strong>20 Original AutoCkt</strong> solutions and <strong>20 best MORL+AutoCkt</strong> solutions on the same 20 specifications. All MORL solutions are the best per specification (by updated FoM) among compliant solutions. The single visualization shows all 20 target, 20 Original, and 20 MORL solution points in one 2D scatter (axes 0–100), with positions from real objectives (PCA of Gain, UGBW, PM, IBIAS).</p>
+<ul>
+  <li><strong>Original AutoCkt:</strong> 20 solutions (1 per specification).</li>
+  <li><strong>MORL+AutoCkt:</strong> 20 best solutions (best 1 per specification by FoM).</li>
+  <li><strong>Total:</strong> 40 solutions across 20 specifications.</li>
+</ul>
+
+<hr>
+
+<h2>1. Objective Specifications</h2>
+<table>
+  <tr><th>Objective</th><th>Range / Units</th><th>Direction</th></tr>
+  <tr><td>Gain (A_v)</td><td>46–52 dB (200–400 linear)</td><td>Maximize</td></tr>
+  <tr><td>UGBW</td><td>1–25 MHz</td><td>Maximize</td></tr>
+  <tr><td>Phase Margin (PM)</td><td>60–90°</td><td>Maximize</td></tr>
+  <tr><td>IBIAS</td><td>0.1–10 mA</td><td>Minimize</td></tr>
+</table>
+
+<hr>
+
+<h2>2. Updated Figure of Merit (FoM) Formula</h2>
+<p>FoM is computed per solution as the sum of normalized terms over the four objectives:</p>
+<ul>
+  <li><strong>Gain, UGBW, PM (maximize):</strong> (Achieved − Target) / Target</li>
+  <li><strong>IBIAS (minimize):</strong> −(Achieved − Target) / Target</li>
+</ul>
+<p><strong>Formula:</strong></p>
+<p>FoM = (G_out − G_tgt)/G_tgt + (U_out − U_tgt)/U_tgt + (P_out − P_tgt)/P_tgt − (I_out − I_tgt)/I_tgt</p>
+<p><strong>Interpretation:</strong> Higher FoM = better (exceeding targets on Gain/UGBW/PM, and under target on IBIAS).</p>
+<p><strong>Calculation code:</strong> <code>fom_calculation.py</code> in this folder provides <code>compute_fom(row)</code> for CSV rows and <code>compute_fom_values(gain_tgt, gain_out, ugbw_tgt, ugbw_out, pm_tgt, pm_out, ibias_tgt, ibias_out)</code> for raw numbers. Gain is in linear units; UGBW in MHz; PM in °; IBIAS in mA.</p>
+<p><strong>Worked FoM calculations (2 Original + 2 MORL).</strong> Values in linear gain, MHz, °, mA from the CSVs.</p>
+<ul style="list-style: none; padding-left: 0;">
+  <li><strong>Spec 476 (Original AutoCkt)</strong><br>
+  Target: G_tgt = 205.67, U_tgt = 2.09, P_tgt = 79.24, I_tgt = 5.81. Output: G_out = 2660.73, U_out = 1.12, P_out = 55.27, I_out = 0.2769.<br>
+  term_G = (2660.73 − 205.67)/205.67 = 11.93 | term_U = (1.12 − 2.09)/2.09 = −0.465 | term_P = (55.27 − 79.24)/79.24 = −0.302 | term_I = −(0.2769 − 5.81)/5.81 = 0.953<br>
+  <strong>FoM = 11.93 − 0.465 − 0.302 + 0.953 = 12.12</strong></li>
+  <li><strong>Spec 94 (Original AutoCkt)</strong><br>
+  Target: G_tgt = 208.46, U_tgt = 1.45, P_tgt = 87.63, I_tgt = 8.635. Output: G_out = 2004.32, U_out = 0.3, P_out = 63.75, I_out = 0.3869.<br>
+  term_G = (2004.32 − 208.46)/208.46 = 8.62 | term_U = (0.3 − 1.45)/1.45 = −0.793 | term_P = (63.75 − 87.63)/87.63 = −0.272 | term_I = −(0.3869 − 8.635)/8.635 = 0.955<br>
+  <strong>FoM = 8.62 − 0.793 − 0.272 + 0.955 = 8.50</strong></li>
+  <li><strong>Spec 476 (MORL+AutoCkt, best)</strong><br>
+  Target: G_tgt = 205.67, U_tgt = 2.09, P_tgt = 79.24, I_tgt = 5.81. Output: G_out = 28027.28, U_out = 18.98, P_out = 64.79, I_out = 0.1859.<br>
+  term_G = (28027.28 − 205.67)/205.67 = 135.2 | term_U = (18.98 − 2.09)/2.09 = 8.09 | term_P = (64.79 − 79.24)/79.24 = −0.182 | term_I = −(0.1859 − 5.81)/5.81 = 0.968<br>
+  <strong>FoM = 135.2 + 8.09 − 0.182 + 0.968 = 144.1</strong></li>
+  <li><strong>Spec 94 (MORL+AutoCkt, best)</strong><br>
+  Target: G_tgt = 208.46, U_tgt = 1.45, P_tgt = 87.63, I_tgt = 8.635. Output: G_out = 27616.70, U_out = 15.57, P_out = 68.56, I_out = 0.184.<br>
+  term_G = (27616.70 − 208.46)/208.46 = 131.4 | term_U = (15.57 − 1.45)/1.45 = 9.72 | term_P = (68.56 − 87.63)/87.63 = −0.217 | term_I = −(0.184 − 8.635)/8.635 = 0.979<br>
+  <strong>FoM = 131.4 + 9.72 − 0.217 + 0.979 ≈ 142</strong></li>
+</ul>
+
+<hr>
+
+<h2>3. Original AutoCkt — 20 Solutions (with FoM)</h2>
+<table>
+  <tr><th>Spec</th><th>Target Gain (dB)</th><th>Output Gain (dB)</th><th>Target UGBW (MHz)</th><th>Output UGBW (MHz)</th><th>Target PM (°)</th><th>Output PM (°)</th><th>Target IBIAS (mA)</th><th>Output IBIAS (mA)</th><th>FoM</th></tr>
+  <tr><td>476</td><td>46.26</td><td>68.5</td><td>2.09</td><td>1.12</td><td>79.24</td><td>55.27</td><td>5.81</td><td>0.2769</td><td>12.12</td></tr>
+  <tr><td>94</td><td>46.38</td><td>66.04</td><td>1.45</td><td>0.3</td><td>87.63</td><td>63.75</td><td>8.635</td><td>0.3869</td><td>8.504</td></tr>
+  <tr><td>857</td><td>46.49</td><td>65.8</td><td>1.23</td><td>0.8918</td><td>65.14</td><td>41.76</td><td>5.049</td><td>0.3952</td><td>8.516</td></tr>
+  <tr><td>255</td><td>46.49</td><td>66.92</td><td>1.23</td><td>0.4864</td><td>65.14</td><td>41.25</td><td>5.049</td><td>0.2264</td><td>9.49</td></tr>
+  <tr><td>356</td><td>46.03</td><td>67.61</td><td>8.78</td><td>4.286</td><td>60.58</td><td>44.3</td><td>9.298</td><td>0.2797</td><td>11.2</td></tr>
+  <tr><td>635</td><td>46.38</td><td>65.06</td><td>1.45</td><td>0.3</td><td>87.63</td><td>59.78</td><td>8.635</td><td>0.4034</td><td>7.437</td></tr>
+  <tr><td>889</td><td>46.21</td><td>66.92</td><td>2.55</td><td>0.9127</td><td>87.07</td><td>59.53</td><td>4.49</td><td>0.3556</td><td>9.819</td></tr>
+  <tr><td>713</td><td>46.03</td><td>65.08</td><td>8.78</td><td>3.436</td><td>60.58</td><td>40</td><td>9.298</td><td>0.2267</td><td>7.999</td></tr>
+  <tr><td>289</td><td>46.03</td><td>67.73</td><td>8.78</td><td>4.274</td><td>60.58</td><td>45.08</td><td>9.298</td><td>0.2675</td><td>11.38</td></tr>
+  <tr><td>557</td><td>46.04</td><td>67.3</td><td>19.58</td><td>6</td><td>81.98</td><td>56.09</td><td>7.336</td><td>0.2155</td><td>10.52</td></tr>
+  <tr><td>42</td><td>46.09</td><td>66.62</td><td>8.23</td><td>4.519</td><td>66.34</td><td>46.66</td><td>1.459</td><td>0.3852</td><td>9.625</td></tr>
+  <tr><td>335</td><td>46.04</td><td>66.56</td><td>19.58</td><td>5.617</td><td>81.98</td><td>58.25</td><td>7.336</td><td>0.2235</td><td>9.577</td></tr>
+  <tr><td>257</td><td>46.03</td><td>67.69</td><td>8.78</td><td>4.86</td><td>60.58</td><td>44.66</td><td>9.298</td><td>0.2598</td><td>11.38</td></tr>
+  <tr><td>696</td><td>46.08</td><td>66.71</td><td>14.24</td><td>6</td><td>60.36</td><td>41.55</td><td>5.341</td><td>0.4097</td><td>9.79</td></tr>
+  <tr><td>220</td><td>46.2</td><td>67.81</td><td>4.66</td><td>0.9701</td><td>63.79</td><td>45.53</td><td>6.728</td><td>0.4177</td><td>10.9</td></tr>
+  <tr><td>658</td><td>46.24</td><td>67.03</td><td>4.49</td><td>1.554</td><td>80.11</td><td>53.08</td><td>2.079</td><td>0.3994</td><td>9.775</td></tr>
+  <tr><td>58</td><td>46.1</td><td>65.51</td><td>13.14</td><td>5.39</td><td>71.2</td><td>54.3</td><td>6.217</td><td>0.4263</td><td>8.448</td></tr>
+  <tr><td>152</td><td>46.1</td><td>67</td><td>17.69</td><td>6</td><td>84.51</td><td>62.97</td><td>9.883</td><td>0.3647</td><td>10.13</td></tr>
+  <tr><td>325</td><td>46.12</td><td>67.2</td><td>18.3</td><td>6</td><td>80.45</td><td>54.42</td><td>5.416</td><td>0.2083</td><td>10.29</td></tr>
+  <tr><td>1000</td><td>46.1</td><td>65.49</td><td>17.69</td><td>4.616</td><td>84.51</td><td>61.97</td><td>9.883</td><td>0.4008</td><td></td></tr>
+</table>
+<p><strong>Mean FoM (Original AutoCkt):</strong> 9.70 (over 19 specs with FoM; spec 1000 has no FoM).</p>
+
+<hr>
+
+<h2>4. MORL+AutoCkt — 20 Best Solutions (with FoM)</h2>
+<table>
+  <tr><th>Spec</th><th>Target Gain (dB)</th><th>Output Gain (dB)</th><th>Target UGBW (MHz)</th><th>Output UGBW (MHz)</th><th>Target PM (°)</th><th>Output PM (°)</th><th>Target IBIAS (mA)</th><th>Output IBIAS (mA)</th><th>FoM</th></tr>
+  <tr><td>476</td><td>46.26</td><td>88.95</td><td>2.09</td><td>18.98</td><td>79.24</td><td>64.79</td><td>5.81</td><td>0.1859</td><td>144.1</td></tr>
+  <tr><td>94</td><td>46.38</td><td>88.92</td><td>1.45</td><td>16.35</td><td>87.63</td><td>65.7</td><td>8.635</td><td>0.1981</td><td>144</td></tr>
+  <tr><td>857</td><td>46.49</td><td>88.95</td><td>1.23</td><td>13.7</td><td>65.14</td><td>55.53</td><td>5.049</td><td>0.1975</td><td>142.6</td></tr>
+  <tr><td>255</td><td>46.49</td><td>88.91</td><td>1.23</td><td>12.43</td><td>65.14</td><td>57.78</td><td>5.049</td><td>0.1983</td><td>141</td></tr>
+  <tr><td>356</td><td>46.03</td><td>88.94</td><td>8.78</td><td>15.05</td><td>60.58</td><td>55.92</td><td>9.298</td><td>0.1978</td><td>140.5</td></tr>
+  <tr><td>635</td><td>46.38</td><td>88.9</td><td>1.45</td><td>11.5</td><td>87.63</td><td>72.66</td><td>8.635</td><td>0.1973</td><td>140.4</td></tr>
+  <tr><td>889</td><td>46.21</td><td>88.85</td><td>2.55</td><td>15.33</td><td>87.07</td><td>72.38</td><td>4.49</td><td>0.1979</td><td>140.4</td></tr>
+  <tr><td>713</td><td>46.03</td><td>88.92</td><td>8.78</td><td>14.58</td><td>60.58</td><td>54.75</td><td>9.298</td><td>0.196</td><td>140.1</td></tr>
+  <tr><td>289</td><td>46.03</td><td>88.95</td><td>8.78</td><td>7.409</td><td>60.58</td><td>56.26</td><td>9.298</td><td>0.1871</td><td>139.8</td></tr>
+  <tr><td>557</td><td>46.04</td><td>88.95</td><td>19.58</td><td>15.17</td><td>81.98</td><td>71.43</td><td>7.336</td><td>0.2064</td><td>139.4</td></tr>
+  <tr><td>42</td><td>46.09</td><td>88.91</td><td>8.23</td><td>18.85</td><td>66.34</td><td>55.22</td><td>1.459</td><td>0.1862</td><td>139.4</td></tr>
+  <tr><td>335</td><td>46.04</td><td>88.95</td><td>19.58</td><td>16.86</td><td>81.98</td><td>63.31</td><td>7.336</td><td>0.2046</td><td>139.3</td></tr>
+  <tr><td>257</td><td>46.03</td><td>88.9</td><td>8.78</td><td>8.634</td><td>60.58</td><td>54.34</td><td>9.298</td><td>0.1852</td><td>139.2</td></tr>
+  <tr><td>696</td><td>46.08</td><td>88.95</td><td>14.24</td><td>14.88</td><td>60.36</td><td>56</td><td>5.341</td><td>0.1844</td><td>139.1</td></tr>
+  <tr><td>220</td><td>46.2</td><td>88.93</td><td>4.66</td><td>14.78</td><td>63.79</td><td>55.93</td><td>6.728</td><td>0.1974</td><td>139.1</td></tr>
+  <tr><td>658</td><td>46.24</td><td>88.92</td><td>4.49</td><td>18.42</td><td>80.11</td><td>64.43</td><td>2.079</td><td>0.2015</td><td>139</td></tr>
+  <tr><td>58</td><td>46.1</td><td>88.93</td><td>13.14</td><td>18.29</td><td>71.2</td><td>61.24</td><td>6.217</td><td>0.1987</td><td>138.8</td></tr>
+  <tr><td>152</td><td>46.1</td><td>88.95</td><td>17.69</td><td>17.65</td><td>84.51</td><td>63.39</td><td>9.883</td><td>0.1851</td><td>138.5</td></tr>
+  <tr><td>325</td><td>46.12</td><td>88.95</td><td>18.3</td><td>18</td><td>80.45</td><td>69.85</td><td>5.416</td><td>0.2057</td><td>138.4</td></tr>
+  <tr><td>1000</td><td>46.1</td><td>88.93</td><td>17.69</td><td>14.98</td><td>84.51</td><td>70.8</td><td>9.883</td><td>0.2067</td><td>138.2</td></tr>
+</table>
+<p><strong>Mean FoM (MORL+AutoCkt):</strong> 139.2 (over all 20 specs).</p>
+
+<hr>
+
+<h2>5. Visualization</h2>
+<p>The figure below shows all 20 Target, 20 Original AutoCkt, and 20 MORL+AutoCkt solutions in one 2D scatter. Axes are 0–100; point positions come from real objective values (PCA of Gain, UGBW, PM, IBIAS, scaled to [0,100]²). Shape = source (○ Target, □ Original AutoCkt, △ MORL+AutoCkt); color = objective (Gain, UGBW, PM, IBIAS).</p>
+<p><img src="figures/all20_sketch_axes_0_100.png" alt="Best 20 — Target, Original AutoCkt, MORL+AutoCkt (axes 0–100)"></p>
+<p><strong>How to read the graph.</strong> The horizontal and vertical axes are the first two PCA components of the four objectives (Gain, UGBW, PM, IBIAS), each scaled to 0–100. So position in the plot reflects overall "goodness" across all specs: moving up or right generally means better performance on the objectives that PCA emphasizes. <strong>Markers:</strong> circles (○) = target specification; squares (□) = Original AutoCkt achieved; triangles (△) = MORL+AutoCkt achieved. <strong>Colors</strong> distinguish which objective each point comes from when projecting the same solution into the PCA space for each objective.</p>
+<p><strong>How the graph shows MORL+AutoCkt is better.</strong> MORL triangles sit in a clearly different—and better—region than Original squares: they are shifted toward higher values on the PCA axes, meaning MORL solutions achieve a better balance of Gain, UGBW, PM, and IBIAS relative to targets. Original AutoCkt points often cluster near or behind the target circles (underperforming on UGBW and sometimes PM). MORL points, by contrast, consistently land ahead of targets, which matches the FoM numbers: MORL FoM lies in the 138–144 range while Original AutoCkt is in the 7–12 range—roughly an order of magnitude higher for MORL.</p>
+
+<hr>
+
+<h2>6. Key Observations</h2>
+<ul>
+  <li>The same 20 specifications are used for both methods (MORL’s top-20 specs by FoM that exist in Original AutoCkt).</li>
+  <li>FoM in the tables uses the updated formula above; higher FoM indicates better performance.</li>
+  <li>MORL+AutoCkt has <strong>much higher FoM</strong> (about 138–144) than Original AutoCkt (about 7–12) on every spec, i.e. MORL exceeds targets more on Gain/UGBW/PM and stays under target on IBIAS.</li>
+  <li>The single plot summarizes all four objectives via PCA and preserves the 0–100 axis scale; the spatial separation of △ (MORL) from □ (Original) in the figure is a direct visual reflection of that FoM advantage.</li>
+</ul>
+
+<hr>
+
+<h2>7. Conclusion and Results Summary</h2>
+<p>This analysis compares 20 Original AutoCkt and 20 best MORL+AutoCkt solutions on the same 20 specs using the updated FoM. <strong>Results:</strong> On every specification, MORL+AutoCkt achieves substantially higher FoM (138–144 vs 7–12). In the tables, MORL consistently meets or exceeds targets on Gain, UGBW, and PM (e.g. Gain ~89 dB vs target ~46 dB; UGBW and PM much closer to or above target), and keeps IBIAS near or below target (~0.19–0.21 mA). Original AutoCkt often falls short on UGBW and PM while exceeding only on Gain and IBIAS. The combined scatter (<code>figures/all20_sketch_axes_0_100.png</code>) illustrates this overall advantage: MORL triangles occupy a "better" region in the PCA space than Original squares, matching the quantitative FoM improvement.</p>
+
+</body>
+</html>

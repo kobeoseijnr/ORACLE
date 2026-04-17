@@ -1,0 +1,97 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Results and Output - exclude by default
+results/
+*.json
+*.csv
+*.txt
+!requirements.txt
+!README.md
+!*.md
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.eps
+*.svg
+
+# Allow experiment_5 results, data, and figures
+!experiment_5/results/
+!experiment_5/data/
+!experiment_5/figures/
+!experiment_5/**/*.json
+!experiment_5/**/*.csv
+!experiment_5/**/*.png
+!experiment_5/**/*.jpg
+!experiment_5/**/*.jpeg
+!experiment_5/**/*.pth
+
+# NGSpice specific
+ngspice_path.txt
+*.cir.log
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables
+.env
+.env.local
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+
