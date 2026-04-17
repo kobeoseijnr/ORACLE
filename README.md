@@ -98,12 +98,6 @@ The following small CSV artifacts are tracked specifically to reproduce the pape
 - Average FoM: mean of FoM over the 1,000 best-per-spec rows
 - Top-20 FoM: mean of the top-20 FoM values among the 1,000 best-per-spec rows
 
-Tracked CSVs:
-
-- ORACLE (Cosine): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_original_cosine_with_llm.csv` (use column `fom`)
-- ORACLE (Cosine + LLM): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_llm_cosine.csv`
-- ORACLE (NW): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
-
 ## Table I (solution-level) reproducibility
 
 Table I in the paper is a **solution-level comparison** on the 1,000-problem (1,000 target specifications) benchmark. Each method generates 10 candidate solutions per spec (10,000 total), but Table I reports **one solution per spec** by selecting the **best FoM per spec**.
