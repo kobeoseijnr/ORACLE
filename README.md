@@ -29,6 +29,18 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
   - See `OSEI_MORL_Aucrt (1)/OSEI_MORL_Aucrt/train_llm_masked.py`
 
 
+The following small CSV artifacts are tracked specifically to reproduce the paper's **solution-level comparison table** (1,000 target specifications / MO benchmark). These correspond to selecting the **best FoM per spec** (1 row per `spec`) and then reporting:
+
+- Pass-rate: fraction of best-per-spec rows with `complete_pass == Yes`
+- Average FoM: mean of FoM over the 1,000 best-per-spec rows
+- Top-20 FoM: mean of the top-20 FoM values among the 1,000 best-per-spec rows
+
+Tracked CSVs:
+
+- ORACLE (Cosine): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_original_cosine_with_llm.csv` (use column `fom`)
+- ORACLE (Cosine + LLM): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_llm_cosine.csv`
+- ORACLE (NW): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
+
 ## Published Table Provenance (CSV sources)
 
 This codebase contains multiple experiment runs stored under different folders. 
