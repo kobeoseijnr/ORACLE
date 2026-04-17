@@ -18,7 +18,7 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 
 1. Create and activate a Python environment.
 2. Install dependencies required by the scripts you plan to run (PyTorch, Gym, NumPy, etc.).
-3. (Optional) For LLM-guided action masking, install and run **Ollama** locally and pull a supported model (e.g., Llama 3.2).
+3. For LLM-guided action masking, install and run **Ollama** locally and pull a supported model (e.g., Llama 3.2).
 
 ## Running Training and Evaluation (examples)
 
