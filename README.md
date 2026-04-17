@@ -1,145 +1,228 @@
-# ORACLE: Multi-Objective RL for Analog Circuit Optimization
+# ORACLE: A Multi-Objective Reinforcement Learning-Based Analog Circuit Design Optimizer with LLM-Guided Exploration
 
-This repository contains the code used to train and evaluate **ORACLE**, a preference-conditioned multi-objective reinforcement learning (MORL) approach for discrete analog circuit design (two-stage operational amplifier). The workflow includes:
+ORACLE is an open-source framework for **multi-objective analog circuit design optimization** using **preference-conditioned reinforcement learning** and **LLM-guided exploration**.
 
-- Training MORL agents with different scalarizations (e.g., cosine, NW)
--  **LLM-guided action masking** (served locally via **Ollama**) to improve exploration efficiency
-- Evaluation on a large benchmark of target specifications
-- Post-processing utilities for Pareto metrics (hypervolume, sparsity) and report/figure generation
+Unlike conventional RL-based analog sizing methods that optimize a single scalar reward, ORACLE keeps objectives separate during learning through **vector-valued rewards**. This allows a single trained model to generate multiple trade-off solutions for the same target specification without retraining.
 
-## Repository Structure (high-level)
+## Highlights
 
-- `with_15%_with_20/`, `with_15%_final_New/`: experiment folders (training/evaluation scripts, configs, and analysis utilities)
-- `compute_hv_sparsity_comparison.py`, `plot_hv_sparsity_figures.py`: Pareto metric computation and plotting 
+- **True multi-objective optimization** for analog circuit design
+- **Preference-conditioned MO-DDQN** for controllable trade-off generation
+- **Vector-valued reward learning** instead of scalar reward compression
+- **Cosine-aligned** and **normalized-weight (NW)** preference guidance
+- **LLM-guided action masking** to reduce unproductive exploration
+- **Multiple solutions per target specification** from one trained model
+- Evaluated on a **two-stage op-amp benchmark** with **1,000 target specifications**
 
-## Project Structure (detailed)
+## Motivation
 
-The repository contains multiple experiment snapshots. The most important entry points for reproducing MORL runs and generating result artifacts are:
+Analog circuit design is naturally multi-objective. Designers often need to satisfy and trade off objectives such as:
 
-- `with_15%_with_20/morl_experiments/morl_autockt/`
-  - `train_nw_vs_cosine.py`: train + evaluate MORL agents with NW vs cosine scalarization.
-  - `evaluate.py`: evaluation pipeline (generates per-solution rollouts / raw results).
-  - `results/`: output folder used by scripts in this directory.
+- Gain
+- Unity-gain bandwidth (UGBW)
+- Phase margin (PM)
+- Bias current (Ibias)
 
-- `with_15%_final_New/with_15%/morl_autockt/`
-  - `train_nw_vs_cosine.py`: train + evaluate MORL NW vs cosine (writes models + raw results + comparison CSV).
-  - `train_llm_cosine_original.py`: evaluate baseline cosine vs LLM-guided cosine and generate CSVs.
-  - `train_llm_ddqn.py`: train/evaluate LLM-guided DDQN variants (cosine + NW) and generate comparisons.
-  - `evaluate.py`: evaluation utility used by the above scripts.
-  - `results/`: output folder used by scripts in this directory.
-  - `methodology/`: environment + agent implementation used by the scripts above.
+Many prior RL-based approaches reduce these objectives to a single scalar reward. That simplification can hide Pareto trade-offs, bias optimization toward certain objectives, and force retraining when preferences change.
 
-In general, training scripts write:
+ORACLE addresses this by learning with **multi-objective reward vectors** and conditioning the agent on a **preference vector**, enabling flexible trade-off control at inference time.
 
-- Model checkpoints (`.pth`) under a `results/models_*` directory.
-- Raw rollouts (`morl_raw_*.json`) under the corresponding `results/` folder.
-- Aggregated results CSVs under the corresponding `results/` folder.
+## Method Overview
 
-## Setup
+ORACLE consists of three main components:
 
-1. Create and activate a Python environment.
-2. Install dependencies required by the scripts you plan to run (PyTorch, Gym, NumPy, etc.).
-3. For LLM-guided action masking, install and run **Ollama** locally and pull a supported model (e.g., Llama 3.2).
+### 1. Multi-Objective Circuit Environment
 
-## Running Training and Evaluation (examples)
+The environment returns a **normalized reward vector**, where each element measures progress toward one target specification.
 
-- Train/evaluate MORL scalarizations:
-  - See `with_15%_with_20/morl_experiments/morl_autockt/train_nw_vs_cosine.py`
+- Maximization objectives such as gain, UGBW, and PM are rewarded positively when they improve toward or beyond target
+- Minimization objectives such as Ibias are transformed so that lower values correspond to higher rewards
+- This keeps each objective explicit during training and reduces domination from scale differences
 
-## How to Run Experiments
+### 2. Preference-Conditioned MO-DDQN
 
-The codebase contains multiple experiment folders; the commands below reference the most commonly used entrypoints.
+ORACLE uses a **multi-objective Double Deep Q-Network (MO-DDQN)** that takes:
 
-MORL NW vs cosine (train + evaluate):
+- the current circuit state, and
+- a user-defined **preference vector**
 
-- `with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py`
-  - Train + evaluate:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py`
-  - Evaluate only (use existing trained models):
-    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py --evaluate-only`
-  - Train only:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_nw_vs_cosine.py --train-only`
-  - Outputs:
-    - Models: `with_15%_final_New/with_15%/morl_autockt/results/models_nw_vs_cosine/`
-    - Raw JSON: `with_15%_final_New/with_15%/morl_autockt/results/morl_raw_{nw|cosine}_agent.json`
-    - Comparison CSV: `with_15%_final_New/with_15%/morl_autockt/results/morl_compare_nw_agent_vs_cosine_agent.csv`
+and predicts vector-valued Q-values for all candidate actions.
 
-Baseline cosine vs LLM-guided cosine (evaluate + export CSV):
+Two preference-guidance strategies are supported:
 
-- `with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py`
-  - Train + evaluate:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py`
-  - Evaluate only:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_cosine_original.py --evaluate-only`
-  - Outputs:
-    - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_standard_cosine.csv`
-    - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_llm_cosine.csv`
+- **Cosine-aligned guidance**: selects actions whose predicted value vectors align with the desired trade-off direction
+- **Normalized-weight (NW) guidance**: uses direct weighted scoring for action selection
 
-LLM-guided DDQN (cosine + NW):
+This design allows one trained model to produce solutions for multiple trade-off settings by changing only the preference vector.
 
-- `with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py`
-  - Train + evaluate:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py`
-  - Evaluate only:
-    - `python with_15%_final_New/with_15%/morl_autockt/train_llm_ddqn.py --evaluate-only`
-  - Outputs (under the same `results/` directory):
-    - Models: `results/models_llm_ddqn/`
-    - Raw JSON: `results/morl_raw_llm_{cosine|nw}_agent.json`
+### 3. LLM-Guided Action Masking
 
+Circuit simulation is expensive. ORACLE improves efficiency by using an LLM to filter actions that are unlikely to help in the current state.
 
-The following small CSV artifacts are tracked specifically to reproduce the paper's **solution-level comparison table** (1,000 target specifications / MO benchmark). These correspond to selecting the **best FoM per spec** (1 row per `spec`) and then reporting:
+Examples:
 
-- Pass-rate: fraction of best-per-spec rows with `complete_pass == Yes`
-- Average FoM: mean of FoM over the 1,000 best-per-spec rows
-- Top-20 FoM: mean of the top-20 FoM values among the 1,000 best-per-spec rows
+- block upsizing when **Ibias** is already too high
+- block downsizing when **gain**, **UGBW**, or **PM** are still below target
 
-## Table I (solution-level) reproducibility
+This reduces wasted simulation calls and improves search efficiency.
 
-Table I in the paper is a **solution-level comparison** on the 1,000-problem (1,000 target specifications) benchmark. Each method generates 10 candidate solutions per spec (10,000 total), but Table I reports **one solution per spec** by selecting the **best FoM per spec**.
+## Framework
 
-Computation (per method):
+At a high level, ORACLE operates as follows:
 
-- Select the best solution per spec: `best_fom(spec) = max FoM over the 10 solutions for that spec`.
-- Pass-rate: fraction of these 1,000 best-per-spec solutions with `complete_pass == Yes`.
-- Average FoM: mean FoM over the 1,000 best-per-spec solutions.
-- Top-20 FoM: mean of the top-20 FoM values among the 1,000 best-per-spec solutions.
+1. Receive target specifications for the analog circuit
+2. Build the current circuit state from observed specs and design parameters
+3. Compute a normalized multi-objective reward vector
+4. Use a preference-conditioned MO-DDQN to score actions
+5. Optionally filter harmful or low-value actions using LLM-guided masking
+6. Simulate the updated circuit
+7. Repeat until the design satisfies the target or the episode ends
 
-Paper-reported Table I values:
+## Benchmark
 
-- AutoCKT [12]: Pass-rate 93.8%, Avg FoM 0.434, Top-20 FoM 0.708
-- ORACLE (Cosine): Pass-rate 100.0%, Avg FoM 1.453, Top-20 FoM 1.489
-- ORACLE (Cosine + LLM): Pass-rate 100.0%, Avg FoM 132.3, Top-20 FoM 384.3
-- ORACLE (NW): Pass-rate 100.0%, Avg FoM 138.3, Top-20 FoM 450.1
+ORACLE is evaluated on a **two-stage operational amplifier** benchmark in **45nm BSIM technology**.
 
+### Target objectives
 
-## Published Table Provenance (CSV sources)
+- **Maximize**: Gain, UGBW, PM
+- **Minimize**: Ibias
 
-This codebase contains multiple experiment runs stored under different folders. 
-- **Hypervolume / Sparsity / PF Size table**
-  - `with_15%_final_New/with_15%/morl_autockt/results/hypervolume_sparsity_comparison.csv` (use the `MEAN` row)
+### Success criterion
 
-- **FoM table **
-  - **Cosine **
-    - `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_trained_cosine_with_llm.csv`
-  - **NW **
-    - `with_15%_final_New/with_15%/morl_autockt/results/morl_original_standard_cosine.csv`
-  - **LLM **
-    - `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
+A solution is successful only if all four constraints are satisfied simultaneously:
 
+- `G >= G*` 
+- `UGBW >= UGBW*` 
+- `PM >= PM*` 
+- `Ibias <= Ibias*` 
 
-## Runtime (paper-reported)
+### Evaluation setup
 
-The following wall-clock runtimes (minutes) are reported in the paper's runtime comparison table:
+- **1,000 multi-objective target specifications**
+- ORACLE generates **10 solutions per target specification**
+- AutoCKT baseline generates **1 solution per target**
 
-- AutoCKT [12]: 85
-- ORACLE (Cosine): 6.5
-- ORACLE (Cos + LLM): 3.2
-- ORACLE (NW): 2.4
+## Main Results
 
-These runtimes are not derived from the tracked CSV artifacts above and may depend on hardware/software configuration.
+### Solution-level comparison
 
+| Method | Pass-rate | Average FoM | Top-20 FoM |
+|---|---:|---:|---:|
+| AutoCKT | 93.8% | 0.434 | 0.708 |
+| ORACLE (Cosine) | 100.0% | 1.453 | 1.489 |
+| ORACLE (Cosine + LLM) | 100.0% | 132.3 | 384.3 |
+| ORACLE (NW) | 100.0% | 138.3 | 450.1 |
 
-## Hardware
+### Pareto trade-off quality
 
-Experiments were executed on a machine equipped with an **NVIDIA GA102 GPU**.
+| Method | Mean Hypervolume | Mean Sparsity | Mean PF Size |
+|---|---:|---:|---:|
+| AutoCKT | 1.40 × 10^5 | 0.00 | 1.00 |
+| ORACLE (Cos) | 3.55 × 10^9 | 8.81 × 10^5 | 10.00 |
+| ORACLE (NW) | 3.57 × 10^9 | 9.04 × 10^5 | 10.00 |
 
+### Runtime comparison
+
+| Method | Runtime (Minutes) |
+|---|---:|
+| AutoCKT | 85.0 |
+| ORACLE (Cosine) | 6.5 |
+| ORACLE (Cos + LLM) | 3.2 |
+| ORACLE (NW) | 2.4 |
+
+## Key Contributions
+
+- Reformulates analog circuit optimization from **single scalar reward learning** to **multi-objective vector-valued learning**
+- Enables **preference controllability** using a single trained policy
+- Produces **multiple trade-off solutions** per target specification
+- Integrates **LLM-guided exploration** for more efficient action selection
+- Demonstrates strong improvements in **pass-rate**, **FoM**, **hypervolume**, and **runtime**
+
+## Repository Structure
+
+A typical project structure may look like this:
+
+```text
+ORACLE/
+├── env/                # multi-objective circuit environment
+├── agents/             # preference-conditioned MO-DDQN agents
+├── models/             # neural network definitions
+├── llm/                # LLM-guided action masking utilities
+├── configs/            # experiment and benchmark configs
+├── scripts/            # training and evaluation scripts
+├── results/            # logs, checkpoints, plots, tables
+├── notebooks/          # analysis notebooks
+├── requirements.txt
+└── README.md
+```
+
+## Installation
+
+```bash
+git clone https://github.com/medal-ece/ORACLE.git
+cd ORACLE
+pip install numpy pandas matplotlib torch
+```
+
+## Train
+
+```bash
+cd ORACLE_with_15_with_20/morl_experiments/morl_autockt
+python main.py
+```
+
+## Evaluate
+
+```bash
+cd ORACLE_with_15_with_20/morl_experiments/morl_autockt
+python evaluate.py
+```
+
+## Generate Graphs
+
+```bash
+cd ORACLE_with_15_with_20/morl_experiments/best_20
+python generate_std_vs_llm_graphs.py
+python generate_all_report_graphs.py
+```
+
+## Project Structure
+
+```text
+ORACLE_with_15_with_20/
+└── morl_experiments/
+    ├── morl_autockt/                          # MORL code and results
+    │   ├── autockt/                           # OpenAI Gym environment for the op-amp
+    │   │   ├── envs/                          # Environment definitions
+    │   │   └── gen_specs/                     # Target spec generator
+    │   ├── methodology/                       # Agent implementations
+    │   │   ├── autockt/
+    │   │   │   ├── models/                    # DDQN architectures
+    │   │   │   ├── evaluation/                # Hypervolume, sparsity evaluators
+    │   │   │   └── utils/                     # Utility functions
+    │   │   └── eval_engines/                  # NGSpice and surrogate wrapper
+    │   │       └── ngspice/
+    │   │           ├── ngspice_inputs/        # Netlists, SPICE models, configs
+    │   │           ├── ngspice_wrapper.py     # Direct NGSpice interface
+    │   │           └── surrogate_wrapper.py   # Fast surrogate evaluator
+    │   ├── data/                              # Target spec files (JSON)
+    │   ├── results/                           # All outputs (CSV, JSON, models)
+    │   ├── main.py                            # Training entry point
+    │   ├── evaluate.py                        # Evaluation script
+    │   ├── train_nw_vs_cosine.py              # NW vs Cosine agent comparison
+    │   ├── gen_nw_original.py                 # NW results on original specs
+    │   └── merge_llm_to_cosine.py             # Merge LLM results into cosine CSV
+    ├── original_autockt/                      # AutoCkt baseline
+    │   ├── autockt/                           # Original environment
+    │   ├── eval_engines/                      # Original NGSpice engine
+    │   ├── results/                           # Baseline results
+    │   ├── graphs/                            # Baseline plots
+    │   ├── main.py                            # Training script
+    │   └── evaluate.py                        # Evaluation script
+    ├── best_20/                               # Analysis and visualization
+    │   ├── generate_std_vs_llm_graphs.py      # 4-group comparison graphs
+    │   ├── generate_all_report_graphs.py      # Full report figures
+    │   ├── Comprehensive_Comparison_Report.md # Written comparison
+    │   └── std_vs_llm_figures/                # Output figures
+    └── create_best_comparison.py              # Best-of-1000 comparison
+```
