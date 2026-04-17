@@ -55,17 +55,6 @@ This codebase contains multiple experiment runs stored under different folders.
   - **LLM **
     - `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
 
-## Runtime (paper-reported)
-
-The following wall-clock runtimes (minutes) are reported in the paper's runtime comparison table:
-
-- AutoCKT [12]: 85
-- ORACLE (Cosine): 6.5
-- ORACLE (Cos + LLM): 3.2
-- ORACLE (NW): 2.4
-
-These runtimes are not derived from the tracked CSV artifacts above and may depend on hardware/software configuration.
-
 
 ## Hardware
 
