@@ -41,6 +41,30 @@ Tracked CSVs:
 - ORACLE (Cosine + LLM): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_llm_cosine.csv`
 - ORACLE (NW): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv`
 
+## Table I (solution-level) reproducibility
+
+Table I in the paper is a **solution-level comparison** on the 1,000-problem (1,000 target specifications) benchmark. Each method generates 10 candidate solutions per spec (10,000 total), but Table I reports **one solution per spec** by selecting the **best FoM per spec**.
+
+Computation (per method):
+
+- Select the best solution per spec: `best_fom(spec) = max FoM over the 10 solutions for that spec`.
+- Pass-rate: fraction of these 1,000 best-per-spec solutions with `complete_pass == Yes`.
+- Average FoM: mean FoM over the 1,000 best-per-spec solutions.
+- Top-20 FoM: mean of the top-20 FoM values among the 1,000 best-per-spec solutions.
+
+Paper-reported Table I values:
+
+- AutoCKT [12]: Pass-rate 93.8%, Avg FoM 0.434, Top-20 FoM 0.708
+- ORACLE (Cosine): Pass-rate 100.0%, Avg FoM 1.453, Top-20 FoM 1.489
+- ORACLE (Cosine + LLM): Pass-rate 100.0%, Avg FoM 132.3, Top-20 FoM 384.3
+- ORACLE (NW): Pass-rate 100.0%, Avg FoM 138.3, Top-20 FoM 450.1
+
+Reproducible CSV artifacts in this repository:
+
+- ORACLE (Cosine): compute best-per-spec from `with_15%_with_20/morl_experiments/morl_autockt/results/morl_autockt_results_original_cosine_with_llm.csv` using `fom`.
+- ORACLE (Cosine + LLM): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_llm_cosine.csv` (already best-per-spec).
+- ORACLE (NW): `with_15%_with_20/morl_experiments/morl_autockt/results/morl_best_per_spec_nw.csv` (already best-per-spec).
+
 ## Published Table Provenance (CSV sources)
 
 This codebase contains multiple experiment runs stored under different folders. 
