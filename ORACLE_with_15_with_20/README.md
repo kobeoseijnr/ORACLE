@@ -1,4 +1,4 @@
-# RLMAG: A Reinforcement Learning-based Multi-Objective Analog Circuit Design Optimizer with Large Language Models Guidance
+# ORACLE: Multi-Objective RL for Analog Circuit Optimization
 
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-Framework-red.svg)](https://pytorch.org/)
@@ -8,7 +8,7 @@
 
 Analog circuit design automation using Reinforcement Learning (RL) can reduce manual effort and speed up the design process. However, most existing RL methods optimize a single objective, and even those that claim multi-objective (MO) support collapse all design specs into one scalar reward. This hides the real trade-offs between objectives, produces sub-optimal designs, and forces retraining whenever specs change.
 
-**RLMAG** solves these problems. It is an RL framework for multi-objective analog circuit optimization that uses **vector-valued learning** and **preference-aware conditioning** instead of a scalar reward. A preference vector controls the objective weights, so one trained model can produce designs for different trade-offs without retraining. Two preference guidance strategies, **Normalized Weight** and **Cosine-aligned guidance**, help the agent converge to high-quality Pareto fronts. An **LLM-guided action masking** step filters out actions that would lead to bad designs or waste runtime.
+**ORACLE** solves these problems. It is an RL framework for multi-objective analog circuit optimization that uses **vector-valued learning** and **preference-aware conditioning** instead of a scalar reward. A preference vector controls the objective weights, so one trained model can produce designs for different trade-offs without retraining. Two preference guidance strategies, **Normalized Weight** and **Cosine-aligned guidance**, help the agent converge to high-quality Pareto fronts. An **LLM-guided action masking** step filters out actions that would lead to bad designs or waste runtime.
 
 ### Highlights
 
@@ -25,7 +25,7 @@ Designing analog circuits means balancing competing goals. Increasing gain often
 2. You only get one solution per run
 3. You cannot see the full trade-off landscape
 
-RLMAG fixes all three by learning a **Pareto front** of solutions per spec, using **cosine similarity** to a preference vector as the reward signal, and adding **LLM-guided** and **neural-network-based** reward shaping to improve quality and diversity.
+ORACLE fixes all three by learning a **Pareto front** of solutions per spec, using **cosine similarity** to a preference vector as the reward signal, and adding **LLM-guided** and **neural-network-based** reward shaping to improve quality and diversity.
 
 ## Circuit Under Test
 

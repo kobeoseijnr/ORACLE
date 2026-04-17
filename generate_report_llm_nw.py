@@ -26,7 +26,7 @@ NW_CSV      = RESULTS / "morl_autockt_results_trained_nw.csv"
 COSINE_CSV  = RESULTS / "morl_autockt_results_trained_cosine.csv"
 HV_CSV      = RESULTS / "hypervolume_sparsity_comparison.csv"
 NW_LLM_CSV  = RESULTS / "morl_autockt_results_llm_masked_nw.csv"
-OUTPUT      = Path(r"C:\Users\kobeo\OneDrive\Desktop\RLMAG_LLM_NW_Comparison_Report.docx")
+OUTPUT      = Path(r"C:\Users\kobeo\OneDrive\Desktop\ORACLE_LLM_NW_Comparison_Report.docx")
 
 # ---------------------------------------------------------------------------
 # Helper: load and clean a CSV, splitting off summary rows
@@ -233,7 +233,7 @@ doc = Document()
 
 # Title
 title = doc.add_heading(
-    "RLMAG: LLM-Guided MORL and NW MORL\nMethodology, Evaluation, and Comparison with Standard Cosine MORL",
+    "ORACLE: LLM-Guided MORL and NW MORL\nMethodology, Evaluation, and Comparison with Standard Cosine MORL",
     level=0
 )
 title.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -427,7 +427,7 @@ doc.add_heading("PART B: NW MORL (Normalized Weight)", level=1)
 # B1. Introduction
 doc.add_heading("B1. Introduction", level=2)
 doc.add_paragraph(
-    "The NW (Normalized Weight) MORL agent is a third variant of the RLMAG framework. Instead "
+    "The NW (Normalized Weight) MORL agent is a third variant of the ORACLE framework. Instead "
     "of using cosine similarity or LLM-guided action masking, the NW agent employs a learned "
     "neural network to adaptively shape the reward signal during training. This auxiliary reward "
     "network is co-trained alongside the main DDQN policy network."

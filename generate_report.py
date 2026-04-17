@@ -17,7 +17,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 MORL_CSV = Path(r"C:\Users\kobeo\OneDrive\Desktop\trail\with_15%_final_New\with_15%\morl_autockt\results\morl_autockt_results_original_cosine.csv")
 ORIG_CSV = Path(r"C:\Users\kobeo\OneDrive\Desktop\trail\with_15%_final_New\with_15%\original_autockt\results\original_autockt_results_original.csv")
 HV_CSV   = Path(r"C:\Users\kobeo\OneDrive\Desktop\trail\with_15%_final_New\with_15%\morl_autockt\results\hypervolume_sparsity_comparison.csv")
-OUTPUT   = Path(r"C:\Users\kobeo\OneDrive\Desktop\RLMAG_MORL_vs_AutoCkt_Report.docx")
+OUTPUT   = Path(r"C:\Users\kobeo\OneDrive\Desktop\ORACLE_MORL_vs_AutoCkt_Report.docx")
 
 # ---------------------------------------------------------------------------
 # Load data
@@ -142,7 +142,7 @@ print("Building Word document...")
 doc = Document()
 
 # Title
-title = doc.add_heading("RLMAG: MORL AutoCkt (Cosine) vs Original AutoCkt", level=0)
+title = doc.add_heading("ORACLE: MORL AutoCkt (Cosine) vs Original AutoCkt", level=0)
 title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 subtitle = doc.add_paragraph("A Detailed Comparison Report")
@@ -568,7 +568,7 @@ doc.add_paragraph(
     style="List Bullet"
 )
 doc.add_paragraph(
-    "These results validate the RLMAG framework's approach of replacing scalar reward optimization "
+    "These results validate the ORACLE framework's approach of replacing scalar reward optimization "
     "with vector-valued, preference-conditioned learning for analog circuit design automation."
 )
 

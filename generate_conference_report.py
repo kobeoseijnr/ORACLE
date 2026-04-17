@@ -1,5 +1,5 @@
 """
-Generate a conference-paper-quality Word document detailing the RLMAG MORL methodology.
+Generate a conference-paper-quality Word document detailing the ORACLE MORL methodology.
 Covers: problem formulation, MDP, environment, agent architectures (DDQN cosine, LLM, NW),
 reward design, preference conditioning, training, evaluation, and results.
 All details extracted directly from the source code.
@@ -21,7 +21,7 @@ NW_CSV    = RESULTS / "morl_autockt_results_nw.csv"
 COS_CSV   = RESULTS / "morl_autockt_results_original_cosine.csv"
 HV_CSV    = HV_RESULTS / "hypervolume_sparsity_comparison.csv"
 ORIG_CSV  = Path(r"C:\Users\kobeo\OneDrive\Desktop\trail\with_15%_final_New\with_15%\original_autockt\results\original_autockt_results_original.csv")
-OUTPUT    = Path(r"C:\Users\kobeo\OneDrive\Desktop\RLMAG_Conference_Methodology_Report.docx")
+OUTPUT    = Path(r"C:\Users\kobeo\OneDrive\Desktop\ORACLE_Conference_Methodology_Report.docx")
 
 # ---------------------------------------------------------------------------
 # Load all data
@@ -144,8 +144,7 @@ style.font.name = "Calibri"
 
 # ======================= TITLE =============================================
 title = doc.add_heading(
-    "RLMAG: A Reinforcement Learning-based Multi-Objective Analog Circuit Design Optimizer "
-    "with Large Language Model Guidance", level=0)
+    "ORACLE: Multi-Objective RL for Analog Circuit Optimization", level=0)
 title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 sub = doc.add_paragraph("Detailed Methodology, Approach, and Evaluation Report")
@@ -158,8 +157,8 @@ doc.add_paragraph("")
 # ======================= ABSTRACT ==========================================
 doc.add_heading("Abstract", level=1)
 p_normal(doc,
-    "This report presents the complete methodology of RLMAG, a multi-objective reinforcement "
-    "learning (MORL) framework for automated analog circuit design. RLMAG replaces the scalar "
+    "This report presents the complete methodology of ORACLE, a multi-objective reinforcement "
+    "learning (MORL) framework for automated analog circuit design. ORACLE replaces the scalar "
     "reward function used by conventional RL-based circuit optimizers with a vector-valued, "
     "preference-conditioned formulation that generates diverse Pareto-optimal designs from a "
     "single trained model. We detail three agent variants: (1) Standard MORL with cosine "
@@ -192,10 +191,10 @@ doc.add_paragraph(
     "different reward weights, which is computationally expensive.", style="List Bullet")
 
 p_normal(doc,
-    "RLMAG addresses all three limitations by formulating circuit design as a multi-objective "
+    "ORACLE addresses all three limitations by formulating circuit design as a multi-objective "
     "Markov Decision Process (MO-MDP) with preference-conditioned policies. A single trained "
     "model can generate designs for any preference vector without retraining. Furthermore, "
-    "RLMAG introduces two novel enhancement strategies: LLM-guided action masking and learned "
+    "ORACLE introduces two novel enhancement strategies: LLM-guided action masking and learned "
     "normalized-weight reward shaping."
 )
 
@@ -388,7 +387,7 @@ p_normal(doc,
 doc.add_heading("4.1.2 Cosine Similarity Scalarization", level=3)
 p_normal(doc,
     "To select actions, the multi-objective Q-values must be scalarized into a single ranking. "
-    "RLMAG uses cosine similarity between the Q-value vector and the preference vector, "
+    "ORACLE uses cosine similarity between the Q-value vector and the preference vector, "
     "scaled by the Q-value magnitude:"
 )
 p_equation(doc,
@@ -752,7 +751,7 @@ p_normal(doc,
 # ======================= 10. CONCLUSION ====================================
 doc.add_heading("10. Conclusion", level=1)
 p_normal(doc,
-    "RLMAG introduces a principled multi-objective reinforcement learning framework for "
+    "ORACLE introduces a principled multi-objective reinforcement learning framework for "
     "analog circuit design that overcomes the fundamental limitations of scalar-reward RL. "
     "The key contributions are:"
 )
@@ -771,7 +770,7 @@ doc.add_paragraph(
     f"pass rates, with 3.8x hypervolume improvement and ~7 Pareto solutions per spec.", style="List Number")
 
 p_normal(doc,
-    "Future work includes extending RLMAG to multi-topology optimization, integrating "
+    "Future work includes extending ORACLE to multi-topology optimization, integrating "
     "process variation awareness, and deploying the LLM guidance with smaller, fine-tuned "
     "models for reduced inference cost."
 )
