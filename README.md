@@ -12,7 +12,7 @@ This repository contains the code used to train and evaluate **ORACLE**, a prefe
 - `with_15%_with_20/`, `with_15%_final_New/`: experiment folders (training/evaluation scripts, configs, and analysis utilities)
 - `AutoCkt/`: baseline/original AutoCkt components and scripts
 - `OSEI_MORL_Aucrt (1)/`, `OSEI_MORL_Aucrt_update/`: MORL + LLM masking training/evaluation code
-- `compute_hv_sparsity_comparison.py`, `plot_hv_sparsity_figures.py`: Pareto metric computation and plotting helpers
+- `compute_hv_sparsity_comparison.py`, `plot_hv_sparsity_figures.py`: Pareto metric computation and plotting 
 
 ## Setup
 
