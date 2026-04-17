@@ -27,6 +27,8 @@ Thumbs.db
 **/checkpoints/**
 **/dataset/**
 **/data/**
+
+PDMORL-Preference-Driven-Multi-Objective-Reinforcement-Learning-Algorithm/
 **/*.pth
 **/*.pt
 **/*.ckpt
