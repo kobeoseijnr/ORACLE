@@ -2,7 +2,7 @@
 
 This repository contains the code used to train and evaluate **ORACLE**, a preference-conditioned multi-objective reinforcement learning (MORL) approach for discrete analog circuit design (two-stage operational amplifier). The workflow includes:
 
-- Training MORL agents with different scalarizations (e.g., cosine, Nash welfare)
+- Training MORL agents with different scalarizations (e.g., cosine, NW)
 - Optional **LLM-guided action masking** (served locally via **Ollama**) to improve exploration efficiency
 - Evaluation on a large benchmark of target specifications
 - Post-processing utilities for Pareto metrics (hypervolume, sparsity) and report/figure generation
