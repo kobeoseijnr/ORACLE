@@ -202,8 +202,8 @@ python generate_all_report_graphs.py
 ### Installation
 
 ```bash
-git clone https://github.com/kobeoseijnr/Reinforcement-learning-for-Circuit-design.git
-cd Reinforcement-learning-for-Circuit-design
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git
+cd <REPO_NAME>
 pip install numpy pandas matplotlib torch
 ```
 

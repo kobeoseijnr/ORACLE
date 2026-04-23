@@ -2,7 +2,7 @@
 Create best-100 and best-20 comparison files from Original AutoCkt and MORL results.
 - Original: from original_strict (max results: 938/1000). Rank and take best 100, best 20.
 - MORL: from original_morl (10000 solutions). Pick best of 10 per spec -> 1000, then best 100, best 20.
-Output: D:\\raja\\OSEI_MORL_Aucrt\\with_15%\\best_20\\
+Output: D:\\raja\\MORL_Aucrt\\with_15%\\best_20\\
 """
 
 import numpy as np

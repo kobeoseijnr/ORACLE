@@ -1,8 +1,9 @@
-# OSEI MORL/AutoCkt
+# MORL/AutoCkt
 
 ## Overview
 
 This project implements a comparison framework for Multi-Objective Reinforcement Learning (MORL) and AutoCkt methods for circuit optimization. The framework evaluates and compares performance across multiple optimization objectives including Gain, UGBW (Unity Gain Bandwidth), Phase Margin, and IBIAS (Bias Current).
+
 
 ## Project Structure
 

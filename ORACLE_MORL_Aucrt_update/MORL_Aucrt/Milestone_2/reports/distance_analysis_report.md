@@ -16,19 +16,19 @@
 
 ### Complete Comparison: AutoCkt vs MORL+AutoCkt
 
-![Complete Comparison - All Objective Pairs](D:/OSEI_MORL_Aucrt/Milestone_2/figures/all_objective_pairs_combined.png)
+![Complete Comparison - All Objective Pairs](D:/MORL_Aucrt/Milestone_2/figures/all_objective_pairs_combined.png)
 
 **Figure 1:** Comprehensive comparison showing both AutoCkt and MORL+AutoCkt solutions across all six objective pairs.
 
 ### Original AutoCkt Performance
 
-![Original AutoCkt - All Objective Pairs](D:/OSEI_MORL_Aucrt/Milestone_2/figures/autockt_only_combined.png)
+![Original AutoCkt - All Objective Pairs](D:/MORL_Aucrt/Milestone_2/figures/autockt_only_combined.png)
 
 **Figure 2:** Original AutoCkt performance across all objective pairs.
 
 ### MORL+AutoCkt Performance
 
-![MORL+AutoCkt - All Objective Pairs](D:/OSEI_MORL_Aucrt/Milestone_2/figures/morl_only_combined.png)
+![MORL+AutoCkt - All Objective Pairs](D:/MORL_Aucrt/Milestone_2/figures/morl_only_combined.png)
 
 **Figure 3:** MORL+AutoCkt performance across all objective pairs showing multiple solutions.
 
@@ -38,7 +38,7 @@
 
 ## Gain vs UGBW
 
-![Gain vs UGBW](D:/OSEI_MORL_Aucrt/Milestone_2/figures/gain_vs_ugbw_FoM_formula.png)
+![Gain vs UGBW](D:/MORL_Aucrt/Milestone_2/figures/gain_vs_ugbw_FoM_formula.png)
 
 ### Results Table
 
@@ -95,7 +95,7 @@
 
 ## Gain vs Phase Margin
 
-![Gain vs Phase Margin](D:/OSEI_MORL_Aucrt/Milestone_2/figures/gain_vs_phase_margin_FoM_formula.png)
+![Gain vs Phase Margin](D:/MORL_Aucrt/Milestone_2/figures/gain_vs_phase_margin_FoM_formula.png)
 
 ### Results Table
 
@@ -152,7 +152,7 @@
 
 ## Gain vs IBIAS
 
-![Gain vs IBIAS](D:/OSEI_MORL_Aucrt/Milestone_2/figures/gain_vs_ibias_FoM_formula.png)
+![Gain vs IBIAS](D:/MORL_Aucrt/Milestone_2/figures/gain_vs_ibias_FoM_formula.png)
 
 ### Results Table
 
@@ -209,7 +209,7 @@
 
 ## UGBW vs Phase Margin
 
-![UGBW vs Phase Margin](D:/OSEI_MORL_Aucrt/Milestone_2/figures/ugbw_vs_phase_margin_FoM_formula.png)
+![UGBW vs Phase Margin](D:/MORL_Aucrt/Milestone_2/figures/ugbw_vs_phase_margin_FoM_formula.png)
 
 ### Results Table
 
@@ -266,7 +266,7 @@
 
 ## UGBW vs IBIAS
 
-![UGBW vs IBIAS](D:/OSEI_MORL_Aucrt/Milestone_2/figures/ugbw_vs_ibias_FoM_formula.png)
+![UGBW vs IBIAS](D:/MORL_Aucrt/Milestone_2/figures/ugbw_vs_ibias_FoM_formula.png)
 
 ### Results Table
 
@@ -323,7 +323,7 @@
 
 ## Phase Margin vs IBIAS
 
-![Phase Margin vs IBIAS](D:/OSEI_MORL_Aucrt/Milestone_2/figures/phase_margin_vs_ibias_FoM_formula.png)
+![Phase Margin vs IBIAS](D:/MORL_Aucrt/Milestone_2/figures/phase_margin_vs_ibias_FoM_formula.png)
 
 ### Results Table
 
